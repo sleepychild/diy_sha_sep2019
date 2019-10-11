@@ -1,15 +1,20 @@
 # diy_sha_sep2019
 <h3>DIY Smart Home Automation September 2019</h3>
 <hr>
-Abandon hope all ye who enter here!
+<p>Abandon hope all ye who enter here!</p>
 
-Todo
-  Twisted web server
-    Display device status a.k.a ADC Voltage, Current ( will not work ) and Humidity .
-    Control Relays start and stop the water pump ( btw plants can go water themselves )
-  ESP32 Firmware
-    Network connectivity
-    Read from ADC
-    Publish Status to server
-    Read relay controll from server
-    Some type of loop to detect state changes
+<h4>TODO:</h4>
+<ul>
+  <li>
+  <p>Twisted web server</p>
+    Display device status a.k.a ADC Voltage, Current ( will not work ) and Humidity .</br>
+    Control Relays start and stop the water pump ( btw plants can go water themselves ).</br>
+  </li><li>
+  <p>ESP32 Firmware</p>
+    Network connectivity</br>
+    Read from ADC</br>
+    Publish Status to server</br>
+    Read relay controll from server</br>
+    Some type of loop to detect state changes</br>
+  </li>
+</ul>
