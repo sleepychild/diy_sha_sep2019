@@ -13,5 +13,5 @@ __Abandon hope all ye who enter here!__
 - [ ] Some type of loop to detect state changes
 
 #### Twisted web server
-- [ ] Display device status a.k.a ADC Voltage, Current ( will not work ) and Humidity .</p>
-- [ ] Control Relays start and stop the water pump ( btw plants can go water themselves ).</p>
+- [ ] Display device status a.k.a ADC Voltage, Current ( will not work ) and Humidity .
+- [ ] Control Relays start and stop the water pump ( btw plants can go water themselves ).
