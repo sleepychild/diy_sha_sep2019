@@ -3,6 +3,7 @@ import esp
 import network
 import ntptime
 import webrepl
+from settings import cnf
 
 # Set debuging
 esp.osdebug(0)
@@ -15,7 +16,7 @@ station_interface.scan()
 wifi_connect_try_count = 5
 
 while not station_interface.isconnected():
-    station_interface.connect('M-Tel_06A9', '48575443C706A97B')
+    station_interface.connect(local_wifi_ssid, local_wifi_password)
     wifi_connect_try_count -= 1
     if not wifi_connect_try_count:
         break

@@ -1,0 +1,6 @@
+{
+    "development" : true,
+    "local_wifi_ssid" : "your_wifi_ssid",
+    "local_wifi_password" : "your_wifi_password",
+    "webrepl_cfg_PASS" : "your_webrepl_cfg_PASS" 
+}
