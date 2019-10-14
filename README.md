@@ -6,6 +6,7 @@ __Abandon hope all ye who enter here!__
 ### TODO:
 
 #### ESP32 Micropython
+- [ ] Provisioning
 - [ ] Network connectivity
 - [ ] Read from ADC
 - [ ] Publish Status to server

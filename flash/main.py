@@ -1,37 +1,25 @@
-import time
 import _thread
-import machine
-from helper_functions import ls, cat, lscat
+from time import time
+from machine import Pin
+from helper_functions import ls, cat, lscat, rm, lsrm, toggle_pin, toggle_pin_loop
 
 def handler(pin):
-    print('Enter interupt for: ', pin, 'at ', time.time())
-    time.sleep(1)
-    print('Exit interupt for: ', pin, 'at ', time.time())
+    print('Interupt for: ', pin, 'at ', time())
 
 # Pins Out
-GPIO2 = machine.Pin(2, machine.Pin.OUT)
+GPIO2 = Pin(2, Pin.OUT)
 
 # Pins In
-GPIO4 = machine.Pin(4, machine.Pin.IN, machine.Pin.PULL_UP)
-GPIO5 = machine.Pin(5, machine.Pin.IN, machine.Pin.PULL_UP)
-GPIO15 = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
-GPIO18 = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
+GPIO4 = Pin(4, Pin.IN, Pin.PULL_UP)
+GPIO5 = Pin(5, Pin.IN, Pin.PULL_UP)
+GPIO15 = Pin(15, Pin.IN, Pin.PULL_UP)
+GPIO18 = Pin(18, Pin.IN, Pin.PULL_UP)
 
 # Pin Interupts
-GPIO4.irq(trigger=machine.Pin.IRQ_RISING, handler=handler)
-GPIO5.irq(trigger=machine.Pin.IRQ_RISING, handler=handler)
-GPIO15.irq(trigger=machine.Pin.IRQ_RISING, handler=handler)
-GPIO18.irq(trigger=machine.Pin.IRQ_RISING, handler=handler)
+GPIO4.irq(trigger=Pin.IRQ_RISING, handler=handler)
+GPIO5.irq(trigger=Pin.IRQ_RISING, handler=handler)
+GPIO15.irq(trigger=Pin.IRQ_RISING, handler=handler)
+GPIO18.irq(trigger=Pin.IRQ_RISING, handler=handler)
 
-# I2C SCL GPIO22 SDA GPIO21
-i2c = machine.I2C(scl=machine.Pin(22), sda=machine.Pin(21), freq=400000)
-
-def toggle(pin):
-    pin.value(not pin.value())
-
-def toggle_loop(pin, ms):
-    while True:
-        time.sleep_ms(ms)
-        toggle(pin)
-
-_thread.start_new_thread(toggle_loop, (GPIO2, 500))
+# Start led blink thread
+_thread.start_new_thread(toggle_pin_loop, (GPIO2, 500))

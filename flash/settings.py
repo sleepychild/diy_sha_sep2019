@@ -2,11 +2,9 @@ from ujson import load
 from builtins import setattr
 
 class settings_class():
-    development = True
     local_wifi_ssid = ""
     local_wifi_password = ""
-    webrepl_cfg_PASS = ""
-
+    webrepl_cfg_PASS = "toor"
     def __init__(self, *args, **kwargs):
         try:
             with open("settings.json", "r") as settings_file:
@@ -15,5 +13,8 @@ class settings_class():
                     setattr(self, setting, value)
         except Exception as e:
             print(e)
+            self.provision()
+    def provision(self):
+        print("provisioning")
 
 cnf = settings_class()
