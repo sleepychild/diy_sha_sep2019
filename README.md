@@ -1,5 +1,5 @@
 # diy_sha_sep2019
-## DIY Smart Home Automation September 2019
+### DIY Smart Home Automation September 2019
 
 __Abandon hope all ye who enter here!__
 
