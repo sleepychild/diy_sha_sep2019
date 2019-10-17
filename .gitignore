@@ -1,4 +1,5 @@
 *.pyc
 flash/settings.json
-bin/*
 bin
+include
+share
