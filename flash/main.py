@@ -39,9 +39,13 @@ _thread.start_new_thread(toggle_pin_loop, (GPIO2, 500))
 access_points_list = net_if.get_access_points()
 
 for ap in access_points_list:
-    if ap['ssid'].decode() == cnf.ssid:
+    if ap['ssid'] == cnf.ssid:
         net_if.connect_to_ap(cnf.ssid, cnf.key)
         break
 
 if not net_if.station_interface.isconnected():
+    essid, ip = net_if.start_access_point()
+    lcd.clear()
+    lcd.putstr(net_if.ap_interface.config('essid'))
+    lcd.move_to(0,1)
     lcd.putstr(net_if.ap_interface.ifconfig()[0])

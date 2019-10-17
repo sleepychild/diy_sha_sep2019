@@ -29,7 +29,22 @@ class network_interface():
 
     def start_access_point(self):
         self.interface_mode(network.AP_IF)
-        self.ap_interface.config()
+        return net_if.ap_interface.config('essid'), net_if.ap_interface.ifconfig()[0]
+
+    def get_authmode_name(self, authmode):
+        if authmode == network.AUTH_MAX:
+            return "MAX"
+        if authmode == network.AUTH_OPEN:
+            return "OPEN"
+        if authmode == network.AUTH_WEP:
+            return "WEP"
+        if authmode == network.AUTH_WPA2_PSK:
+            return "WPA2_PSK"
+        if authmode == network.AUTH_WPA_PSK:
+            return "WPA_PSK"
+        if authmode == network.AUTH_WPA_WPA2_PSK:
+            return "WPA_WPA2_PSK"
+        return None
 
     def get_access_points(self):
         IF_MODE = self.interface_mode()
@@ -43,11 +58,12 @@ class network_interface():
         access_points = []
         for ap in ap_list:
             access_point = {
-                "ssid":ap[0],
+                "ssid":ap[0].decode(),
                 "bssid":ap[1],
                 "channel":ap[2],
                 "RSSI":ap[3],
                 "authmode":ap[4],
+                "authname":self.get_authmode_name(ap[4]),
                 "hidden":ap[5]
             }
             access_points.append(access_point)
