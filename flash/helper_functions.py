@@ -33,6 +33,10 @@ def lsrm():
     except Exception as e:
         print(e)
 
+def url_decode(encoded_string):
+    encoded_string = ":".join(encoded_string.split("%3A"))
+    return "/".join(encoded_string.split("%2F"))
+
 def toggle_pin(pin):
     pin.value(not pin.value())
 

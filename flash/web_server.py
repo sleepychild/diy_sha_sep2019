@@ -4,7 +4,7 @@ class http_server():
     # templates
     html = """<!DOCTYPE html><html><head> <title>ESP32</title></head><body><h1>ESP32</h1>{content}</body></html>"""
     done = """<p>Done</p>"""
-    sel_net_form = """<form method="POST"><table><tr><th>#</th><th>SSID</th><th>AUTH</th><th>RSSI</th><th>CH</th></tr>{access_point_from_rols}</table><label for="net_key">SSID KEY : </label><input id="net_key" name="network_key" type="text"><input type="submit"></form>"""
+    sel_net_form = """<form method="POST"><label for="cloud_address">Cloud Address</label><input id="cloud_address" name="cloud_address" type="text"><table><tr><th>#</th><th>SSID</th><th>AUTH</th><th>RSSI</th><th>CH</th></tr>{access_point_from_rols}</table><label for="net_key">SSID KEY : </label><input id="net_key" name="network_key" type="text"><input type="submit"></form>"""
     sel_net_row = """<tr><td><input type="radio" id="{ssid}" name="ssid" value="{ssid}"></td><td><label for="{ssid}">{ssid}</label></td><td>{authname}</td><td>{RSSI}</td><td>{channel}</td></tr>"""
 
     # configs
