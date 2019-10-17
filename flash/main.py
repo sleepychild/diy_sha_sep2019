@@ -1,7 +1,9 @@
 import ntptime
 import webrepl
 import _thread
+import dht
 from time import time, sleep_ms, localtime
+from esp32 import raw_temperature, hall_sensor
 from machine import Pin, reset
 from helper_functions import ls, cat, lscat, rm, lsrm, url_decode, toggle_pin, toggle_pin_loop
 from settings import cnf
@@ -11,17 +13,30 @@ from web_server import ws
 
 def display_alternate(delay):
     while True:
+        # network
         lcd.clear()
         lcd.putstr(cnf.ssid)
         lcd.move_to(0,1)
         lcd.putstr(net_if.station_interface.ifconfig()[0])
         sleep_ms(delay)
-        lcd.clear()
+        # time
         current_time = localtime()
+        lcd.clear()
         lcd.putstr("{year}-{month}-{day}".format(year=current_time[0],month=current_time[1],day=current_time[2]))
         lcd.move_to(0,1)
         lcd.putstr("{hour}:{minute}:{second}".format(hour=current_time[3],minute=current_time[4],second=current_time[5]))
         sleep_ms(delay)
+        # sensors
+        try:
+            env_sensor.measure()
+        except Exception as e:
+            print(e)
+        lcd.clear()
+        lcd.putstr("RAW:{raw_temp} HAL:{hal}".format(raw_temp=str(int((raw_temperature() - 32) / 1.8)), hal=hall_sensor()))
+        lcd.move_to(0,1)
+        lcd.putstr("T:{temp} H:{humidity}".format(temp=env_sensor.temperature(),humidity=env_sensor.humidity()))
+        sleep_ms(delay)
+
 
 def handler(pin):
     print('Interupt for: ', pin, 'at ', time())
@@ -40,6 +55,9 @@ GPIO4.irq(trigger=Pin.IRQ_RISING, handler=handler)
 GPIO5.irq(trigger=Pin.IRQ_RISING, handler=handler)
 GPIO15.irq(trigger=Pin.IRQ_RISING, handler=handler)
 GPIO18.irq(trigger=Pin.IRQ_RISING, handler=handler)
+
+# DHT
+env_sensor = dht.DHT11(Pin(23))
 
 # Start led blink thread
 _thread.start_new_thread(toggle_pin_loop, (GPIO2, 500))
