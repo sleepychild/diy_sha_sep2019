@@ -1,7 +1,2 @@
 *.pyc
 flash/settings.json
-bin
-include
-share
-lib
-lib64
