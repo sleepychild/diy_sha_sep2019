@@ -7,6 +7,7 @@ from helper_functions import ls, cat, lscat, rm, lsrm, toggle_pin, toggle_pin_lo
 from settings import cnf
 from lcd import lcd
 from wifi import net_if
+from web_server import ws
 
 '''
 # Start webrepl when we get network connectivity
@@ -14,6 +15,11 @@ webrepl.start()
 # Set time via ntp when we get internet connectivity
 ntptime.settime()    
 '''
+
+#STATES
+STATE = None
+PROVISIONING = 0
+PROVISIONED = 1
 
 def handler(pin):
     print('Interupt for: ', pin, 'at ', time())
@@ -36,6 +42,7 @@ GPIO18.irq(trigger=Pin.IRQ_RISING, handler=handler)
 # Start led blink thread
 _thread.start_new_thread(toggle_pin_loop, (GPIO2, 500))
 
+
 access_points_list = net_if.get_access_points()
 
 for ap in access_points_list:
@@ -44,8 +51,13 @@ for ap in access_points_list:
         break
 
 if not net_if.station_interface.isconnected():
+    # Set Access Point
     essid, ip = net_if.start_access_point()
     lcd.clear()
     lcd.putstr(net_if.ap_interface.config('essid'))
     lcd.move_to(0,1)
     lcd.putstr(net_if.ap_interface.ifconfig()[0])
+    # Run Web Server
+    ws.ip = net_if.ap_interface.ifconfig()[0]
+    ws.setup()
+    _thread.start_new_thread(ws.runner, (access_points_list,))
