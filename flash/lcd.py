@@ -270,8 +270,31 @@ class I2cLcd(LcdApi):
         self.i2c.writeto(self.i2c_addr, bytearray([byte | MASK_E]))
         self.i2c.writeto(self.i2c_addr, bytearray([byte]))
 
+class display_class(I2cLcd):
+    i2c = False
 
-# I2C SCL GPIO22 SDA GPIO21
-i2c = I2C(scl=Pin(22), sda=Pin(21), freq=400000)
-lcd_address = i2c.scan()[0]
-lcd = I2cLcd(i2c, lcd_address, 2, 16)
+    def __init__(self):
+        # I2C SCL GPIO22 SDA GPIO21
+        self.i2c = I2C(scl=Pin(22), sda=Pin(21), freq=400000)
+        super().__init__(self.i2c, self.i2c.scan()[0], 2, 16)
+
+    def network(self, ssid, ip):
+        # network
+        self.clear()
+        self.putstr(ssid)
+        self.move_to(0,1)
+        self.putstr(ip)
+
+    def time(self, current_time):
+        # time
+        self.clear()
+        self.putstr("{year}-{month}-{day}".format(year=current_time[0],month=current_time[1],day=current_time[2]))
+        self.move_to(0,1)
+        self.putstr("{hour}:{minute}:{second}".format(hour=current_time[3],minute=current_time[4],second=current_time[5]))
+
+    def sensor(self, raw_temp, hal):
+        # sensors
+        self.clear()
+        self.putstr("RAW:{raw_temp} HAL:{hal}".format(raw_temp=raw_temp, hal=hal))
+
+lcd = display_class()

@@ -34,7 +34,7 @@ class http_server():
     def runner(self, apl):
         while True:
             self.request_data = {}
-            conn, self.request_data['remote_host'] = ws.sock.accept()
+            conn, self.request_data['remote_host'] = self.sock.accept()
             request = conn.makefile('rwb', 0)
             post_data_length = 0
             self.request_data['request'] = request.readline().decode().split("\r\n")[0]
@@ -55,9 +55,9 @@ class http_server():
                     p_key, p_val = el.split("=")
                     self.request_data["POST_DATA"][p_key] = p_val
             if post_data_length:
-                response = ws.html.format(content=self.done)
+                response = self.html.format(content=self.done)
             else:
-                response = ws.html.format(content=ws.select_network_form(apl))
+                response = self.html.format(content=self.select_network_form(apl))
             conn.send(response)
             conn.close()
             if post_data_length:

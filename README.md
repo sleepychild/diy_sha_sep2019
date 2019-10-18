@@ -6,13 +6,8 @@ __Abandon hope all ye who enter here!__
 ### TODO:
 
 #### ESP32 Micropython
-- [ ] Provisioning
-- [ ] Network connectivity
-- [ ] Read from ADC
-- [ ] Publish Status to server
-- [ ] Read relay controll from server
-- [ ] Some type of loop to detect state changes
-
-#### Twisted web server
-- [ ] Display device status a.k.a ADC Voltage, Current ( will not work ) and Humidity .
-- [ ] Control Relays start and stop the water pump ( btw plants can go water themselves ).
+- [x] Provisioning
+- [x] Network connectivity
+- [x] Gather Status
+- [x] Inform
+- [x] CUART
